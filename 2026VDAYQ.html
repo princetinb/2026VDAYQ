@@ -1,0 +1,167 @@
+<Valentines question html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I have a question for you :3</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6e6;
+            margin: 0;
+            overflow: hidden; /* Prevents scrollbars */
+        }
+
+        #valentine-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        h1 { color: #ff3366; }
+
+        img { max-width: 400px; height: auto; border-radius: 10px; }
+
+        #button-container {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: none;
+            transition: all 0.3s ease; /* Smooth growing */
+        }
+
+        #yesBtn { background-color: #4CAF50; color: white; }
+        #noBtn { background-color: #f44336; color: white; }
+
+        /* YES Page Style */
+        #yes-page {
+            display: none;
+            text-align: center;
+            color: #ff3366;
+        }
+
+        /* Falling Petals */
+        .petal {
+            position: absolute;
+            background-color: #ffb3c6;
+            border-radius: 150% 0 150% 0;
+            animation: fall linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes fall {
+            0% { transform: translate(0, -10vh) rotate(0deg); }
+            100% { transform: translate(100px, 100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="valentine-container">
+        <!-- REPLACE GIF HERE -->
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTZjMDliOTUyZjRvdjIwZWdldzcybmZ4d2s4d3cxNjBudnlmd3p3Mm92NGVtNHBzYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Q6WPVzFU8LcBWWgQE1/giphy.gif">
+        <h1>Will you be my Valentine?</h1>
+        <div id="button-container">
+            <button id="yesBtn" onclick="showYesPage()">Yes</button>
+            <button id="noBtn" onclick="noClicked()">No</button>
+        </div>
+    </div>
+
+    <div id="yes-page">
+        <h1>Yay! <3</h1>
+        <!-- REPLACE GIF HERE -->
+        <img src="https://i.pinimg.com/originals/4c/62/b8/4c62b8664b2aa5d5c16e080936e52a88.gif">
+        <img src="https://media.tenor.com/q7Il4-HaNbkAAAAM/happy-valentines.gif">
+        <br>
+        <img src="https://media.tenor.com/PjP31EwOK90AAAAM/yay.gif">
+        <img src="https://media.tenor.com/RiZpodi6JD0AAAAM/fast-cat-cat-excited.gif">
+
+    </div>
+
+    <script>
+
+        let noClicks = 0;
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const container = document.getElementById('valentine-container');
+        const yesPage = document.getElementById('yes-page');
+
+        function noClicked() {
+           noClicks++;
+
+           // Increase font size and padding
+           let fontSize = 20 + (noClicks * 30);
+           let padding = 10 + (noClicks * 20);
+
+           yesBtn.style.fontSize = fontSize + 'px';
+           yesBtn.style.padding = padding + 'px ' + (padding * 2) + 'px';
+
+           // If clicks are high enough, make it fill the screen
+            if (noClicks > 5) {
+            yesBtn.style.position = 'fixed';
+            yesBtn.style.top = '0';
+            yesBtn.style.left = '0';
+            yesBtn.style.width = '100vw'; // 100% of viewport width
+            yesBtn.style.height = '100vh'; // 100% of viewport height
+            yesBtn.style.fontSize = '100px'; // Very large text
+            yesBtn.style.zIndex = '999'; // Ensure it sits on top
+            noBtn.style.display = 'none'; // Hide No button
+        }
+	  
+	 // Make NO button smaller ---
+          let newNoSize = 20 - (noClicks * 1.5);
+        if (newNoSize > 0) {
+        noBtn.style.fontSize = newNoSize + 'px';
+        noBtn.style.padding = (newNoSize/2) + 'px';
+    } else {
+        noBtn.style.display = 'none'; // Hide when too small
+    }
+
+        // Change No button text
+        const messages = ["Are you sure?", "Really?", "Think again!", "Please?", "Last chance!"];
+        if (noClicks < messages.length) {
+            noBtn.innerText = messages[noClicks];
+        } else if (noClicks === messages.length) {
+            noBtn.innerText = "Okay fine...";
+        } else {
+            noBtn.style.display = 'none'; // Hide No button
+        }
+    }
+
+
+
+        function showYesPage() {
+            container.style.display = 'none';
+            yesPage.style.display = 'block';
+            createPetals();
+        }
+
+        function createPetals() {
+            for (let i = 0; i < 50; i++) {
+                let petal = document.createElement('div');
+                petal.classList.add('petal');
+                document.body.appendChild(petal);
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.animationDuration = Math.random() * 3 + 2 + 's';
+                petal.style.width = Math.random() * 20 + 10 + 'px';
+                petal.style.height = Math.random() * 20 + 10 + 'px';
+            }
+        }
+    </script>
+</body>
+</html>
